@@ -14,5 +14,5 @@ document.getElementById('urlForm').onsubmit = async function (event) {
 
 	document.getElementById('result').textContent = response.ok
 		? `Сокращенная ссылка: ${result.short}`
-		: `Ошибка: ${result.message}`;
+		: `Ошибка: ${result.error}`;
 };

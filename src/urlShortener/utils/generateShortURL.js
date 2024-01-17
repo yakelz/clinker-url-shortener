@@ -1,11 +1,11 @@
-const ShortUrl = require('../models/shortUrl');
+const Urls = require('../db/models/urls');
 
 const findUniqueShortId = async (customShortId) => {
 	let uniqueShortId = customShortId;
 	let isUnique = false;
 
 	while (!isUnique) {
-		const existingUrl = await ShortUrl.findOne({ short: uniqueShortId });
+		const existingUrl = await Urls.findOne({ short: uniqueShortId });
 		if (!existingUrl) {
 			return uniqueShortId;
 		}
