@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# public
+/src/urlShortener/public
+
+
 # testing
 /coverage
 
