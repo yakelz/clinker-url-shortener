@@ -1,22 +1,18 @@
 const Urls = require('../db/models/urls');
 
 const findUniqueShortId = async (customShortId) => {
-	let uniqueShortId = customShortId;
-	let isUnique = false;
+    let uniqueShortId = customShortId || generateShortId();
 
-	while (!isUnique) {
-		const existingUrl = await Urls.findOne({ short: uniqueShortId });
-		if (!existingUrl) {
-			return uniqueShortId;
-		}
-		if (customShortId) {
-			throw new Error('Этот сокращенный URL уже занят.');
-		}
-		// Генерируем новый ID, если пользовательский ID не был предоставлен
-		uniqueShortId = generateShortId();
-	}
-
-	return uniqueShortId;
+    while (true) {
+        const existingUrl = await Urls.findOne({ where: { shortUrl: uniqueShortId } });
+        if (!existingUrl) {
+            return uniqueShortId; 
+        }
+        if (customShortId) {
+            throw new Error('Этот сокращенный URL уже занят.');
+        }
+        uniqueShortId = generateShortId();
+    }
 };
 
 const generateShortId = () => {
