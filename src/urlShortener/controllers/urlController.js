@@ -16,12 +16,18 @@ class urlController {
 		try {
 			const shortId = await findUniqueShortId(customShortId || generateShortId());
 
-			const formattedUrl = fullUrl.startsWith('http://') || fullUrl.startsWith('https://')
-      	? fullUrl : `http://${fullUrl}`;
+			const formattedUrl =
+				fullUrl.startsWith('http://') || fullUrl.startsWith('https://')
+					? fullUrl
+					: `http://${fullUrl}`;
 
-			const newUrl = await Urls.create({ fullUrl: formattedUrl, shortUrl: shortId, userId: userId });
+			const newUrl = await Urls.create({
+				fullUrl: formattedUrl,
+				shortUrl: shortId,
+				userId: userId,
+			});
 			const domain = req.headers.host;
-      res.json({shortUrl: `${domain}/${newUrl.shortUrl}`});
+			res.json({ shortUrl: `${domain}/${newUrl.shortUrl}` });
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
